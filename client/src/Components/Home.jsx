@@ -11,7 +11,9 @@ const Home = () => {
   
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/users");
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
+          withCredentials: true
+        });
         setUsers(res.data);
       } catch {
         setUsers([]);
@@ -22,11 +24,13 @@ const Home = () => {
       e.preventDefault();
       const { name, email, password } = form;
       const url = isLogin
-        ? "http://localhost:5000/api/auth/login"
-        : "http://localhost:5000/api/auth/register";
+        ? `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`
+        : `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`;
   
       try {
-        const res = await axios.post(url, { name, email, password });
+        const res = await axios.post(url, { name, email, password }, {
+          withCredentials: true
+        });
         if (isLogin) {
           setUser(res.data.user);
         } else {
@@ -41,7 +45,9 @@ const Home = () => {
     };
   
     const handleLogout = async () => {
-      await axios.post("http://localhost:5000/api/auth/logout");
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
+        withCredentials: true
+      });
       setUser(null);
       setUsers([]);
     };
@@ -49,7 +55,9 @@ const Home = () => {
     useEffect(() => {
       const checkLogin = async () => {
         try {
-          const res = await axios.get("http://localhost:5000/api/auth/me");
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/me`, {
+            withCredentials: true
+          });
           setUser(res.data.user);
         } catch {
           setUser(null);

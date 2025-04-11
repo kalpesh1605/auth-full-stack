@@ -65,8 +65,8 @@ authRouter.post("/google", async (req, res) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
-    sameSite: "Lax"
+    secure: true,
+    sameSite: "None"
   }).json({ user: { name: user.name, email: user.email } });
 });
 

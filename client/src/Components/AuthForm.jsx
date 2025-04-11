@@ -45,7 +45,7 @@ const AuthForm = ({ form, setForm, isLogin, setIsLogin, onSubmit, setUser }) => 
 
       <div className="p-4"><GoogleLogin
         onSuccess={async (credentialResponse) => {
-          const res = await axios.post("http://localhost:5000/api/auth/google", {
+          const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/google`, {
               credential: credentialResponse.credential,
             });
           setUser(res.data.user);
