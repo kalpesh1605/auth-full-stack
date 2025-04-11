@@ -20,8 +20,8 @@ authRouter.post("/register", async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "Lax"
+      secure: true,
+      sameSite: "None"
     }).json({ user: { name: user.name, email: user.email } });
 
   } catch (err) {
@@ -40,8 +40,8 @@ authRouter.post("/login", async (req, res) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
-    sameSite: "Lax"
+    secure: true,
+    sameSite: "None"
   }).json({ user: { name: user.name, email: user.email } });
 });
 
@@ -85,7 +85,11 @@ authRouter.get("/me", async (req, res) => {
 });
 
 authRouter.post("/logout", (req, res) => {
-  res.clearCookie("token").send("Logged out");
+  res.clearCookie("token", {
+    path: "/",              
+    httpOnly: true,         
+    sameSite: "None",       
+  }).send("Logged out");
 });
 
 export default authRouter;
