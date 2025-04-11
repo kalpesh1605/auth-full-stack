@@ -1,7 +1,7 @@
 import express from 'express'
 import { OAuth2Client } from 'google-auth-library'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import userModel from '../models/User.js'
 
 const authRouter = express.Router();
